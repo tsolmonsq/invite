@@ -4,7 +4,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: hsl(0, 0%, 9%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,3 +19,26 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.group {
+  @apply border-b border-custom-gray pb-2;
+}
+
+.custom-summary {
+  @apply flex justify-between items-center cursor-pointer pr-2;
+}
+
+.summary-span {
+  @apply ml-2 group-open:rotate-90 duration-500 transition-transform transform pb-2;
+}
+
+.custom-menu .ant-menu-item .anticon{
+  font-size: 24px; 
+}
+
+
+.custom-menu .ant-menu-item-selected {
+  background-image: linear-gradient(to right, #664BFF, #E32C6A);
+  color: white; 
+}
+
