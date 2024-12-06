@@ -1,67 +1,77 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React from "react";
+import { Form, Input, Button, DatePicker, Upload } from "antd";
+import type { UploadFile } from "antd/es/upload/interface";
+import dayjs from "dayjs";
 
-const Step1 = ({ formData, setFormData, nextStep } : { formData: any, setFormData: any, nextStep: any }) => {
+const Step1 = ({ formData, setFormData, nextStep }: { formData: any, setFormData: any, nextStep: any }) => {
+  const [file, setFile] = React.useState<UploadFile | null>(null);
+
+  const handleFileChange = (info: any) => {
+    const { file } = info;
+    setFile(file);
+    setFormData({ ...formData, image: file });
+  };
+
   return (
-    <div>
-      <h2>Step 1: Event Details</h2>
-      <form onSubmit={(e) => { e.preventDefault(); nextStep(); }}>
-        <div>
-          <label>Зохион байгуулагч:</label> 
-          <input
-            type="text"
-            value={formData.organizer}
-            onChange={(e) => setFormData({ ...formData, organizer: e.target.value })}
-            required
-          />
-        </div>
-        <div>
-          <label>Имэйл хаяг:</label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            required
-          />
-        </div>
-        <div>
-          <label>Утасны дугаар:</label>
-          <input
-            type="tel"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            required
-          />
-        </div>
-        <div>
-          <label>Зураг:</label>
-          <input
-            type="file"
-            
-            required
-          />
-        </div>
-        <div>
-          <label>Эвент хугацаа:</label>
-          <DatePicker
-            selected={formData.eventDate}
-            onChange={(date) => setFormData({ ...formData, eventDate: date })}
-            required
-          />
-        </div>
-        <div>
-          <label>Хаяг:</label>
-          <input
-            type="text"
-            value={formData.address}
-            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-            required
-          />
-        </div>
-        <button type="submit">Үргэлжлүүлэх</button>
-      </form>
-    </div>
+    <>
+    <h2 className="text-2xl font-semibold text-gray-800">Холбоо барих мэдээлэл</h2>
+    <Form
+      layout="vertical"
+      onFinish={nextStep}
+      className="space-y-6"
+    >
+      <Form.Item label="Зохион байгуулагч:" name="organizer" rules={[{ required: true, message: "Зохион байгуулагчийн нэрийг оруулна уу!" }]}>
+        <Input
+          value={formData.organizer}
+          onChange={(e) => setFormData({ ...formData, organizer: e.target.value })}
+        />
+      </Form.Item>
+      
+      <Form.Item label="Имэйл хаяг:" name="email" rules={[{ required: true, type: "email", message: "Баталгаат имэйл оруулна уу!" }]}>
+        <Input
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        />
+      </Form.Item>
+      
+      <Form.Item label="Утасны дугаар:" name="phone" rules={[{ required: true, message: "Утасны дугаараа оруулна уу!" }]}>
+        <Input
+          value={formData.phone}
+          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+        />
+      </Form.Item>
+      
+      <Form.Item label="Зураг:" name="image" rules={[{ required: true, message: "Зураг оруулна уу!" }]}>
+        <Upload beforeUpload={() => false} onChange={handleFileChange}>
+          <Button>Файл сонгох</Button>
+        </Upload>
+      </Form.Item>
+      
+      <Form.Item label="Эвент хугацаа:" name="eventDate" rules={[{ required: true, message: "Эвентийн хугацааг сонгоно уу!" }]}>
+        <DatePicker
+          value={formData.eventDate ? dayjs(formData.eventDate) : null}
+          onChange={(date) => setFormData({ ...formData, eventDate: date })}
+        />
+      </Form.Item>
+      
+      <Form.Item label="Хаяг:" name="address" rules={[{ required: true, message: "Хаягаа оруулна уу!" }]}>
+        <Input
+          value={formData.address}
+          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+        />
+      </Form.Item>
+      
+      <Form.Item>
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="w-full"
+        >
+          Үргэлжлүүлэх
+        </Button>
+      </Form.Item>
+    </Form>
+    </>
   );
 };
 
