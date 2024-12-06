@@ -46,7 +46,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 
       <div className='flex flex-row justify-between'>
         <Form.Item
-            name="lastname"
+            name="lastName"
             label="Овог"
             rules={[{ required: true, message: 'Please input your lastname!', whitespace: true }]}
             style={{ marginBottom: '12px' }}
@@ -55,7 +55,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
         </Form.Item>
 
         <Form.Item
-            name="firstname"
+            name="firstName"
             label="Нэр"
             rules={[{ required: true, message: 'Please input your firsname!', whitespace: true }]}
             style={{ marginBottom: '12px' }}
@@ -65,7 +65,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
       </div>
 
       <Form.Item
-        name="phone"
+        name="phoneNumber"
         label="Утасны дугаар"
         rules={[{ required: true, message: 'Please input your phone number!' }]}
         style={{ marginBottom: '12px' }}
@@ -89,7 +89,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
       </Form.Item>
 
       <Form.Item
-        name="confirm"
+        name="passwordConfirmation"
         label="Нууц үг баталгаажуулах"
         dependencies={['password']}
         hasFeedback
