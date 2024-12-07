@@ -50,7 +50,7 @@ const Step1 = ({ formData, setFormData, nextStep }: { formData: any, setFormData
             message: '8 оронтой утасны дугаар оруулна уу!',
           },]}>
           <Input
-            value={formData.phone}
+            value={formData.phoneNumber}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             placeholder="Зохион байгуулагчийн утасны дугаарыг оруулна уу"
           />
