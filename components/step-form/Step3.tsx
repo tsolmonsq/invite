@@ -4,14 +4,18 @@ import { Card, Typography, Button } from "antd";
 const { Title, Text } = Typography;
 
 const Step3 = ({
-  formData = { organizer: '', eventDate: null, address: '', guests: [] },
+  formData = { organizer: '', startDate: null, endDate: null,address: '', guests: [] },
   submitForm = () => {},
 }: {
   formData: any;
   submitForm: any;
 }) => {
-  const formattedDate = formData.eventDate
-    ? new Date(formData.eventDate).toLocaleDateString('en-US')
+  const formattedStartDate = formData.startDate
+    ? new Date(formData.startDate).toLocaleDateString('en-US')
+    : 'N/A';
+
+    const formattedEndDate = formData.endDate
+    ? new Date(formData.endDate).toLocaleDateString('en-US')
     : 'N/A';
 
   return (
@@ -27,7 +31,10 @@ const Step3 = ({
           <Text strong>Эвентийн нэр:</Text> <Text>{formData.organizer || 'N/A'}</Text>
         </div>
         <div style={{ marginBottom: "16px" }}>
-          <Text strong>Огноо:</Text> <Text>{formattedDate}</Text>
+          <Text strong>Огноо:</Text> <Text>{formattedStartDate}</Text>
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <Text strong>Огноо:</Text> <Text>{formattedEndDate}</Text>
         </div>
         <div style={{ marginBottom: "16px" }}>
           <Text strong>Байршил:</Text> <Text>{formData.address || 'N/A'}</Text>

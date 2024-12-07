@@ -43,7 +43,7 @@ const ApNavbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <Layout style={{ minHeight: '100vh'}}>
-      <Sider className="bg-myGray"
+      <Sider className="bg-myGray pt-8"
         trigger={null}
         collapsible
         collapsed={collapsed}

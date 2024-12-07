@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Space,  Checkbox, Flex, Typography } from 'antd';
+import { Form, Input, Button, Checkbox, Flex, Typography } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 interface LoginProps {

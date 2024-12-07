@@ -17,13 +17,17 @@ const Form = () => {
     email: "",
     phone: "",
     image: null,
-    eventDate: new Date(),
+    startDate: new Date(),
+    endDate: new Date(),
     address: "",
     guests: [],
   });
 
+  const onChange = (value: number) => {
+    setStep(value+1);
+  }
+
   const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
   const submitForm = () => {
     alert("Form submitted");
   };
@@ -32,7 +36,7 @@ const Form = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10 px-5">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-xl w-full">
         {/* Step Indicator */}
-        <Steps current={step - 1} className="mb-8">
+        <Steps current={step - 1} className="mb-8" onChange={onChange}>
           <Step icon={<span><SiGoogleforms /></span>} />
           <Step  icon={<span><RxAvatar /></span>} />
           <Step  icon={<span><IoMdCheckmarkCircle /></span>} />
@@ -48,26 +52,6 @@ const Form = () => {
           )}
           {step === 3 && (
             <Step3 formData={formData} submitForm={submitForm} />
-          )}
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="flex justify-between mt-6">
-          {step > 1 && (
-            <button
-              onClick={prevStep}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded"
-            >
-              Буцах
-            </button>
-          )}
-          {step < 3 && (
-            <button
-              onClick={nextStep}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-            >
-              Үргэлжлүүлэх
-            </button>
           )}
         </div>
       </div>

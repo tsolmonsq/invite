@@ -12,7 +12,7 @@ interface EventCardProps {
 const EventCard : React.FC<EventCardProps> = ({layout ,title, desc, date}) => {
   return (
     <div className={`flex ${layout === 'horizontal' ? 'flex-col' : 'flex-row'} bg-myGray rounded-3xl max-w-xl
-    ${ layout === 'horizontal' ? 'max-w-[300px]' : 'max-w-[700px]'}`}>
+    ${ layout === 'horizontal' ? 'max-w-[290px]' : 'max-w-[700px]'}`}>
 
         <div className={`${layout === 'horizontal' ? 'w-full' : 'w-1/3'}`}>
             <Image

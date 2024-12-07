@@ -3,20 +3,27 @@ import { PrimaryButton } from '@/components/CustomButton'
 import EventCard from '@/components/EventCard'
 import { AlignLeftOutlined, HomeOutlined } from '@ant-design/icons'
 import { Radio } from 'antd'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 const Events = () => {
+
+  const route = useRouter();
 
   const [formLayout, setFormLayout] = useState('horizontal');
   const onChange = (e: any) => {
     setFormLayout(e.target.value);
   };
 
+  const createEvent = () => {
+    route.push('/create-event');
+  }
+
   return (
     <div>
       <div className='flex flex-row justify-between border-b border-gray-500 pb-6'>
         <h2 className='font-bold text-2xl lg:text-3xl'>Эвентүүд</h2>
-        <PrimaryButton text='ЭВЕНТ ҮҮСГЭХ' />
+        <PrimaryButton text='ЭВЕНТ ҮҮСГЭХ' onClick={createEvent}/>
       </div>
 
       <Radio.Group

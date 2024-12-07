@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Table, Form, Input, Button } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const Step2 = ({
   formData,
@@ -12,17 +13,43 @@ const Step2 = ({
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [guestData, setGuestData] = useState({ email: "", surname: "", name: "", phone: "" });
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   const handleAddGuest = () => {
-    setFormData({
-      ...formData,
-      guests: [...formData.guests, guestData],
-    });
+    if (editingIndex !== null) {
+      const updatedGuests = formData.guests.map((guest, index) =>
+        index === editingIndex ? guestData : guest
+      );
+      setFormData({ ...formData, guests: updatedGuests });
+    } else {
+      setFormData({
+        ...formData,
+        guests: [...formData.guests, guestData],
+      });
+    }
     setModalVisible(false);
-    setGuestData({ email: "", surname: "", name: "", phone: "" });
+    setGuestData({ email: "", surname: "", phone: "", name: "", });
+    setEditingIndex(null);
+  };
+
+  const handleEditGuest = (index: number) => {
+    setGuestData(formData.guests[index]);
+    setEditingIndex(index);
+    setModalVisible(true);
+  };
+
+  const handleRemoveGuest = (index: number) => {
+    const updatedGuests = formData.guests.filter((_, i) => i !== index);
+    setFormData({ ...formData, guests: updatedGuests });
   };
 
   const columns = [
+    {
+      title: "№",
+      key: "index",
+      render: (text: any, record: any, index: number) => index + 1,
+      width: 50,
+    },
     {
       title: "Имэйл хаяг",
       dataIndex: "email",
@@ -43,6 +70,22 @@ const Step2 = ({
       dataIndex: "phone",
       key: "phone",
     },
+    {
+      title: "Үйлдэл",
+      key: "action",
+      render: (text: any, record: any, index: number) => (
+        <>
+          <EditOutlined onClick={() => {
+            handleEditGuest(index)
+          }} />
+          <DeleteOutlined
+            className='text-red-700 ml-4'
+            onClick={() => {
+              handleRemoveGuest(index)
+            }} />
+        </>
+      ),
+    },
   ];
 
   return (
@@ -58,7 +101,7 @@ const Step2 = ({
       <Table
         dataSource={formData.guests}
         columns={columns}
-        rowKey={(record, index) => (index !== undefined ? index.toString() : '0')} 
+        rowKey={(record, index) => (index !== undefined ? index.toString() : '0')}
         bordered
         pagination={false}
       />
@@ -122,7 +165,7 @@ const Step2 = ({
       </Modal>
       <Button
         type="primary"
-        className="w-full bg-green-500 hover:bg-green-600 text-white"
+        className="w-full bg-blue-500 hover:bg-green-600 text-white"
         onClick={nextStep}
       >
         Үргэлжлүүлэх

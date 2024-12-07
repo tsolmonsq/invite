@@ -18,9 +18,9 @@ const Header = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            // Do something when authenticated, e.g. redirect, fetch user data
+            
         }
-    }, [isAuthenticated]); // Dependency to re-run when isAuthenticated changes
+    }, [isAuthenticated]); 
 
     const showForm = (formType: 'login' | 'signup') => {
         setIsVisible(true);
@@ -40,10 +40,10 @@ const Header = () => {
                 password,
             });
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 login?.(email, password); 
                 route.push('/event');
-            }
+            } 
         } catch (error) {
             console.error('Login failed:', error);
         } finally {
@@ -73,7 +73,7 @@ const Header = () => {
                 console.log('Sign-up successful:', response.data);
                 setIsLogin(true);
                 setIsVisible(false);
-            }
+            } 
         } catch (error) {
             console.error('Sign-up failed:', error);
             alert('Sign-up failed. Please try again.');
@@ -86,7 +86,7 @@ const Header = () => {
     };
 
     return (
-        <header className='bg-myGray bg-opacity-30 flex flex-row justify-between items-center px-20 h-[70px]'>
+        <header className='bg-myGray flex flex-row justify-between items-center px-20 h-[70px]'>
             <div className="flex justify-center items-center">
                 <Image
                     src="/images/logo.png"
