@@ -1,29 +1,30 @@
 "use client";
 import React, { useState } from "react";
-import { Steps } from "antd";
+import { Steps, message } from "antd";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import { SiGoogleforms } from "react-icons/si";
 import { RxAvatar } from "react-icons/rx";
 import { IoMdCheckmarkCircle } from "react-icons/io";
-import { message } from "antd";
-
+import { useRouter } from "next/navigation"; // Import useRouter from Next.js
 
 const { Step } = Steps;
 
 const Form = () => {
   const [step, setStep] = useState(1);
+  const router = useRouter(); // Initialize the useRouter hook
+
   const [formData, setFormData] = useState<{
     name: string;
     organizer: string;
     email: string;
     phone: string;
     image: File | null;
-    startDate: Date | null; // Specify Date or null
-    endDate: Date | null;   // Specify Date or null
+    startDate: Date | null;
+    endDate: Date | null;
     address: string;
-    guests: Array<{ name: string; email: string }>; // Assuming guests contain name and email
+    guests: Array<{ name: string; email: string }>;
   }>({
     name: "",
     organizer: "",
@@ -35,11 +36,10 @@ const Form = () => {
     address: "",
     guests: [],
   });
-  
 
   const onChange = (value: number) => {
-    setStep(value+1);
-  }
+    setStep(value + 1);
+  };
 
   const nextStep = () => setStep(step + 1);
 
@@ -55,7 +55,7 @@ const Form = () => {
       }
       return response.json();
     },
-  
+
     createGuests: async (guests: any[], eventId: string) => {
       const response = await fetch("http://localhost:4000/guests", {
         method: "POST",
@@ -71,7 +71,6 @@ const Form = () => {
 
   const submitForm = async () => {
     try {
-      // Prepare event data
       const eventPayload = {
         name: formData.name,
         organizer: formData.organizer,
@@ -81,16 +80,15 @@ const Form = () => {
         endDate: formData.endDate ? formData.endDate.toISOString() : null,
         address: formData.address,
       };
-  
-      // 1. Create the event
+
       const createdEvent = await apiService.createEvent(eventPayload);
-  
-      // 2. Create guests linked to the event
+
       if (formData.guests && formData.guests.length > 0) {
         await apiService.createGuests(formData.guests, createdEvent.id);
       }
-  
+
       message.success("Эвент болон зочид амжилттай илгээгдлээ!");
+      router.push("/events"); // Redirect to the /events page
     } catch (error) {
       console.error("Error:", error);
       message.error("Өгөгдлийг илгээхэд алдаа гарлаа!");
@@ -100,14 +98,12 @@ const Form = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10 px-5">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-xl w-full">
-        {/* Step Indicator */}
         <Steps current={step - 1} className="mb-8" onChange={onChange}>
           <Step icon={<span><SiGoogleforms /></span>} />
-          <Step  icon={<span><RxAvatar /></span>} />
-          <Step  icon={<span><IoMdCheckmarkCircle /></span>} />
+          <Step icon={<span><RxAvatar /></span>} />
+          <Step icon={<span><IoMdCheckmarkCircle /></span>} />
         </Steps>
 
-        {/* Step Content */}
         <div>
           {step === 1 && (
             <Step1 formData={formData} setFormData={setFormData} nextStep={nextStep} />

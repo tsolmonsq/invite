@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Typography, Button } from "antd";
+import { useRouter } from "next/navigation"; 
 
 const { Title, Text } = Typography;
 
@@ -10,6 +11,7 @@ const Step3 = ({
   formData: any;
   submitForm: any;
 }) => {
+  const router = useRouter(); 
   const formattedStartDate = formData.startDate
     ? new Date(formData.startDate).toLocaleDateString('en-US')
     : 'N/A';
@@ -49,7 +51,10 @@ const Step3 = ({
         size="large"
         block
         style={{ borderRadius: "8px" }}
-        onClick={submitForm}
+        onClick={() => {
+          submitForm();
+          router.push("/events");
+        }}
       >
         Илгээх
       </Button>
