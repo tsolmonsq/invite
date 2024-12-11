@@ -39,7 +39,7 @@ const Form = () => {
 
   const onChange = (value: number) => {
     setStep(value + 1);
-  };
+  }
 
   const nextStep = () => setStep(step + 1);
 

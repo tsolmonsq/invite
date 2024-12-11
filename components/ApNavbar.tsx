@@ -1,11 +1,11 @@
 'use client';
-
 import { Button, Layout, Menu, theme } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { CalendarOutlined, CheckCircleOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
 
 const { Sider, Content } = Layout;
+
 
 const ApNavbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -42,7 +42,7 @@ const ApNavbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <Layout style={{ minHeight: '100vh'}}>
+    <Layout style={{ minHeight: '100vh' }}>
       <Sider className="bg-myGray pt-8"
         trigger={null}
         collapsible
