@@ -1,6 +1,7 @@
 import { PrimaryButton } from "@/components/CustomButton";
 import Image from "next/image";
 
+// Home page-ийн үндсэн компонент
 export default function Home() {
   return (
     <main>
@@ -11,12 +12,17 @@ export default function Home() {
         }}
       >
         <h1 className="text-white text-2xl md:text-3xl lg:text-4xl font-bold">Цахим урилга илгээх үйлчилгээ</h1>
-        <PrimaryButton text="ЭВЕНТ ҮҮСГЭХ"/>
+        <PrimaryButton text="ЭВЕНТ ҮҮСГЭХ"/> {/* Эвент үүсгэх товч */}
       </section>
 
+        {/* Танилцуулга болон асуулт, хариулт агуулсан хэсэг */}
       <div className="flex flex-col items-start w-full max-w-3xl mx-auto py-8 gap-16 px-8">
         <section className="w-full flex flex-col gap-8">
+
+          {/* Танилцуулга болон давуу тал агуулсан хэсэг */}
           <h2 className="text-myPrimary text-center text-2xl md:text-3xl lg:text-3xl font-bold">Цахим урилга илгээх боломж</h2>
+
+          {/* Танилцуулгын хэсэг */}
           <article className="flex flex-row justify-between items-start">
             <div className="flex flex-col gap-4">
               <h3 className="font-bold text-xl md:text-2xl lg:text-2xl">Шийдэл</h3>
@@ -30,6 +36,8 @@ export default function Home() {
               className="flex-shrink-0"
             />
           </article>
+
+          {/* Давуу тал агуулсан хэсэг */}
           <article className="flex flex-row justify-between items-start">
             <div className="flex flex-col gap-4">
               <h3 className="font-bold text-xl md:text-2xl lg:text-2xl">Давуу талууд</h3>
@@ -54,6 +62,8 @@ export default function Home() {
             />
           </article>
         </section>
+
+        {/* Асуулт хариултын хэсэг */}
         <section className="w-full flex flex-col gap-4">
           <h2 className="text-myPrimary text-center text-2xl md:text-3xl lg:text-3xl font-bold mb-4">Түгээмэл асуултууд</h2>
           <details className="group">

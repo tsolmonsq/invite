@@ -24,7 +24,7 @@ const Form = () => {
   });
 
   const onChange = (value: number) => {
-    setStep(value+1);
+    setStep(value + 1);
   }
 
   const nextStep = () => setStep(step + 1);
@@ -38,8 +38,8 @@ const Form = () => {
         {/* Step Indicator */}
         <Steps current={step - 1} className="mb-8" onChange={onChange}>
           <Step icon={<span><SiGoogleforms /></span>} />
-          <Step  icon={<span><RxAvatar /></span>} />
-          <Step  icon={<span><IoMdCheckmarkCircle /></span>} />
+          <Step icon={<span><RxAvatar /></span>} />
+          <Step icon={<span><IoMdCheckmarkCircle /></span>} />
         </Steps>
 
         {/* Step Content */}
