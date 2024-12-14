@@ -10,9 +10,13 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { AuthContext } from '@/contexts/AuthContext';
 
+// Вэбсайтын header хэсгийн дүрслэх component
 const Header = () => {
+    // (Modal харагдах эсэх)
     const [isVisible, setIsVisible] = useState(false);
+    // Нэвтэрсэн эсэхийг шалгах тохиргоо
     const [isLogin, setIsLogin] = useState(true);
+    // AuthContext-аас авсан хэрэглэгчийн мэдээлэл, нэвтрэх, гарах үйлдлүүд
     const { user, login, logout, isAuthenticated } = useContext(AuthContext) || {};
     const route = useRouter();
 
@@ -22,15 +26,18 @@ const Header = () => {
         }
     }, [isAuthenticated]); 
 
+    // Нэвтрэх эсвэл бүртгүүлэх форм харуулах
     const showForm = (formType: 'login' | 'signup') => {
         setIsVisible(true);
         setIsLogin(formType === 'login');
     };
 
+    // Формыг хаах үйлдэл
     const handleCancel = () => {
         setIsVisible(false);
     };
 
+    // Нэвтрэх үйлдэл
     const handleLogIn = async (values: any) => {
         const { email, password } = values;
 
@@ -51,9 +58,11 @@ const Header = () => {
         }
     };
 
+    // Бүртгүүлэх үйлдэл
     const handleSignUp = async (values: any) => {
         const { email, password, firstName, lastName, phoneNumber, passwordConfirmation } = values;
     
+        // Нууц үг тохирохгүй бол анхааруулах
         if (password !== passwordConfirmation) {
             alert('Passwords do not match! Please try again.');
             return;
@@ -80,6 +89,7 @@ const Header = () => {
         }
     };
 
+    // Гарах үйлдэл
     const handleLogout = () => {
         if (logout) logout(); 
         route.push('/'); 
@@ -101,18 +111,23 @@ const Header = () => {
                 />
             </div>
             <div>
+                {/* Хэрэглэгч нэвтэрсэн үед */}
                 {isAuthenticated ? (
                     <div className='flex flex-row items-center gap-4'>
                         <div className="bg-gray-200 rounded-full w-12 h-12 flex items-center justify-center">
                             <UserOutlined className='text-black text-3xl' />
                         </div>
+                        {/* Гарах товч */}
                         <PrimaryButton text="Гарах" onClick={handleLogout} />
                     </div>
                 ) : (
+                    // Хэрэглэгч нэвтээгүй үед
                     <div className='flex flex-row gap-3'>
+                        {/* Нэвтрэх болон Бүртгүүлэх товч */}
                         <PrimaryButton text='Нэвтрэх' onClick={() => showForm('login')} />
                         <SecondaryButton text="Бүртгүүлэх" onClick={() => showForm('signup')} />
 
+                        {/* Modal хэсэг */}
                         <Modal
                             open={isVisible}
                             footer={null}
@@ -122,6 +137,7 @@ const Header = () => {
                                 top: '5%',
                             }}
                         >
+                            {/* Нэвтрэх эсвэл бүртгүүлэх форм */}
                             {isLogin ? (
                                 <Login onSubmit={handleLogIn} />
                             ) : (

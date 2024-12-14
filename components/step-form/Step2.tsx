@@ -7,78 +7,88 @@ const Step2 = ({
   setFormData,
   nextStep,
 }: {
-  formData: any;
-  setFormData: any;
-  nextStep: any;
+  formData: any; // Анхны өгөгдлийг хадгалах
+  setFormData: any; // Өгөгдлийг шинэчлэх функц
+  nextStep: any; // Дараагийн алхам руу шилжих функц
 }) => {
+  // Modal харагдах эсэхийг удирдах state
   const [modalVisible, setModalVisible] = useState(false);
+  // Зочны мэдээллийг хадгалах state
   const [guestData, setGuestData] = useState({ email: "", surname: "", name: "", phone: "" });
+  // Зочныг засаж байгаа индекстэй холбоотой state
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
+  // Зочны мэдээллийг нэмэх функц
   const handleAddGuest = () => {
+    // Засахыг хүссэн зочныг шинэчилж байна
     if (editingIndex !== null) {
       const updatedGuests = formData.guests.map((guest, index) =>
         index === editingIndex ? guestData : guest
       );
       setFormData({ ...formData, guests: updatedGuests });
     } else {
+      // Шинээр зочин нэмэх
       setFormData({
         ...formData,
         guests: [...formData.guests, guestData],
       });
     }
-    setModalVisible(false);
-    setGuestData({ email: "", surname: "", phone: "", name: "", });
-    setEditingIndex(null);
+    setModalVisible(false);   // Modal хаах
+    setGuestData({ email: "", surname: "", phone: "", name: "", });   // Зочны мэдээллийг цэвэрлэх
+    setEditingIndex(null);    // Засах индексийг цэвэрлэх
   };
 
+  // Зочны мэдээлэл засах функц
   const handleEditGuest = (index: number) => {
-    setGuestData(formData.guests[index]);
-    setEditingIndex(index);
-    setModalVisible(true);
+    setGuestData(formData.guests[index]);   // Засах зочны мэдээллийг авах
+    setEditingIndex(index);   // Засаж буй зочны индексийг хадгалах
+    setModalVisible(true);    // Modal-ыг нээх
   };
 
+  // Зочныг устгах функц
   const handleRemoveGuest = (index: number) => {
-    const updatedGuests = formData.guests.filter((_, i) => i !== index);
+    const updatedGuests = formData.guests.filter((_, i) => i !== index);    // Зочинг устгах
     setFormData({ ...formData, guests: updatedGuests });
   };
 
+  // Хүснэгтэд харагдах багануудад тохирох мэдээллүүдийг тодорхойлно
   const columns = [
     {
-      title: "№",
+      title: "№",   // Дарааллын дугаар
       key: "index",
-      render: (text: any, record: any, index: number) => index + 1,
+      render: (text: any, record: any, index: number) => index + 1,   // Дарааллын дугаарыг харуулах
       width: 50,
     },
     {
-      title: "Имэйл хаяг",
+      title: "Имэйл хаяг",    // Имэйл хаяг
       dataIndex: "email",
       key: "email",
     },
     {
-      title: "Овог",
+      title: "Овог",    // Овог
       dataIndex: "surname",
       key: "surname",
     },
     {
-      title: "Нэр",
+      title: "Нэр",   // Нэр
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Утасны дугаар",
+      title: "Утасны дугаар",   // Утасны дугаар
       dataIndex: "phone",
       key: "phone",
     },
     {
-      title: "Үйлдэл",
+      title: "Үйлдэл",    // Үйлдэл (Засах, Устгах)
       key: "action",
       render: (text: any, record: any, index: number) => (
         <>
           <EditOutlined onClick={() => {
+            {/* Засах товч */ }
             handleEditGuest(index)
           }} />
-          <DeleteOutlined
+          <DeleteOutlined   // Устгах товч
             className='text-red-700 ml-4'
             onClick={() => {
               handleRemoveGuest(index)
@@ -90,31 +100,32 @@ const Step2 = ({
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-semibold text-gray-800">Зочид</h2>
+      <h2 className="text-2xl font-semibold text-gray-800">Зочид</h2>   {/* Хэсгийн нэр */}
       <Button
         type="primary"
-        onClick={() => setModalVisible(true)}
+        onClick={() => setModalVisible(true)}   // Modal нээх
         className="mb-4"
       >
         Зочид нэмэх
       </Button>
       <Table
-        dataSource={formData.guests}
-        columns={columns}
+        dataSource={formData.guests}    // Зочдын мэдээллийг хүснэгтэнд харуулах
+        columns={columns}   // Хүснэгтийн багануудаа тохируулах
         rowKey={(record, index) => (index !== undefined ? index.toString() : '0')}
         bordered
         pagination={false}
       />
       <Modal
-        title="Зочны мэдээлэл оруулах"
+        title="Зочны мэдээлэл оруулах"    // Modal-ийн гарчиг
         visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
+        onCancel={() => setModalVisible(false)}   // Modal хаах
         footer={null}
       >
         <Form
           layout="vertical"
-          onFinish={handleAddGuest}
+          onFinish={handleAddGuest}   // Мэдээлэл оруулсны дараа зочин нэмэх
         >
+          {/* Формын хэсгүүд */}
           <Form.Item
             label="Имэйл хаяг"
             name="email"
@@ -156,17 +167,17 @@ const Step2 = ({
             />
           </Form.Item>
           <div className="flex justify-end space-x-2">
-            <Button onClick={() => setModalVisible(false)}>Болих</Button>
+            <Button onClick={() => setModalVisible(false)}>Болих</Button>   {/* Болих товч */}
             <Button type="primary" htmlType="submit">
               OK
-            </Button>
+            </Button>   {/* OK товч */}
           </div>
         </Form>
       </Modal>
       <Button
         type="primary"
         className="w-full bg-blue-500 hover:bg-green-600 text-white"
-        onClick={nextStep}
+        onClick={nextStep}    // Дараагийн алхам руу шилжих
       >
         Үргэлжлүүлэх
       </Button>
