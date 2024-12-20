@@ -138,10 +138,9 @@ const Step2 = ({
         >
           {/* Формын хэсгүүд */}
           <Form.Item
-            label="Имэйл хаяг"
+            label="Имэйл хаяг:"
             name="email"
-            rules={[{ required: true, message: "Имэйл хаяг оруулна уу!" }]}
-          >
+            rules={[{ required: true, type: "email", message: "Баталгаат имэйл оруулна уу!" }]}>
             <Input
               value={guestData.email}
               onChange={(e) => setGuestData({ ...guestData, email: e.target.value })}
@@ -168,10 +167,12 @@ const Step2 = ({
             />
           </Form.Item>
           <Form.Item
-            label="Утасны дугаар"
+            label="Утасны дугаар:"
             name="phoneNumber"
-            rules={[{ required: true, message: "Утасны дугаараа оруулна уу!" }]}
-          >
+            rules={[{ required: true, message: "Утасны дугаараа оруулна уу!" }, {
+              pattern: /^[0-9]{8}$/,    // Утасны дугаарын форматыг шалгах (8 оронтой)
+              message: '8 оронтой утасны дугаар оруулна уу!',
+            },]}>
             <Input
               value={guestData.phoneNumber}
               onChange={(e) => setGuestData({ ...guestData, phoneNumber: e.target.value })}
