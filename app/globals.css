@@ -36,7 +36,6 @@ body {
   font-size: 24px; 
 }
 
-
 .custom-menu .ant-menu-item-selected {
   background-image: linear-gradient(to right, #664BFF, #E32C6A);
   color: white; 

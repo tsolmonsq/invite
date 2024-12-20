@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Table, Form, Input, Button } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
@@ -14,9 +14,19 @@ const Step2 = ({
   // Modal харагдах эсэхийг удирдах state
   const [modalVisible, setModalVisible] = useState(false);
   // Зочны мэдээллийг хадгалах state
-  const [guestData, setGuestData] = useState({ email: "", surname: "", name: "", phone: "" });
+  const [guestData, setGuestData] = useState({ email: "", lastName: "", firstName: "", phoneNumber: "" });
   // Зочныг засаж байгаа индекстэй холбоотой state
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (editingIndex !== null) {
+      form.setFieldsValue(formData.guests[editingIndex]);
+    } else {
+      form.resetFields();
+    }
+  }, [editingIndex, formData, form]);
 
   // Зочны мэдээллийг нэмэх функц
   const handleAddGuest = () => {
@@ -34,7 +44,7 @@ const Step2 = ({
       });
     }
     setModalVisible(false);   // Modal хаах
-    setGuestData({ email: "", surname: "", phone: "", name: "", });   // Зочны мэдээллийг цэвэрлэх
+    setGuestData({ email: "", lastName: "", phoneNumber: "", firstName: "", });   // Зочны мэдээллийг цэвэрлэх
     setEditingIndex(null);    // Засах индексийг цэвэрлэх
   };
 
@@ -66,18 +76,18 @@ const Step2 = ({
     },
     {
       title: "Овог",    // Овог
-      dataIndex: "surname",
-      key: "surname",
+      dataIndex: "lastName",
+      key: "lastName",
     },
     {
       title: "Нэр",   // Нэр
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "firstName",
+      key: "firstName",
     },
     {
       title: "Утасны дугаар",   // Утасны дугаар
-      dataIndex: "phone",
-      key: "phone",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
     },
     {
       title: "Үйлдэл",    // Үйлдэл (Засах, Устгах)
@@ -123,6 +133,7 @@ const Step2 = ({
       >
         <Form
           layout="vertical"
+          form={form}
           onFinish={handleAddGuest}   // Мэдээлэл оруулсны дараа зочин нэмэх
         >
           {/* Формын хэсгүүд */}
@@ -138,32 +149,32 @@ const Step2 = ({
           </Form.Item>
           <Form.Item
             label="Овог"
-            name="surname"
+            name="lastName"
             rules={[{ required: true, message: "Овгоо оруулна уу!" }]}
           >
             <Input
-              value={guestData.surname}
-              onChange={(e) => setGuestData({ ...guestData, surname: e.target.value })}
+              value={guestData.lastName}
+              onChange={(e) => setGuestData({ ...guestData, lastName: e.target.value })}
             />
           </Form.Item>
           <Form.Item
             label="Нэр"
-            name="name"
+            name="firstName"
             rules={[{ required: true, message: "Нэрээ оруулна уу!" }]}
           >
             <Input
-              value={guestData.name}
-              onChange={(e) => setGuestData({ ...guestData, name: e.target.value })}
+              value={guestData.firstName}
+              onChange={(e) => setGuestData({ ...guestData, firstName: e.target.value })}
             />
           </Form.Item>
           <Form.Item
             label="Утасны дугаар"
-            name="phone"
+            name="phoneNumber"
             rules={[{ required: true, message: "Утасны дугаараа оруулна уу!" }]}
           >
             <Input
-              value={guestData.phone}
-              onChange={(e) => setGuestData({ ...guestData, phone: e.target.value })}
+              value={guestData.phoneNumber}
+              onChange={(e) => setGuestData({ ...guestData, phoneNumber: e.target.value })}
             />
           </Form.Item>
           <div className="flex justify-end space-x-2">

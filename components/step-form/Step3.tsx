@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Typography, Button } from "antd";
 import { useRouter } from "next/navigation";    // Next.js-ийн useRouter hook-ийг ашиглана
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const Step3 = ({
   formData = { organizer: '', startDate: null, endDate: null, address: '', guests: [] }, // Хэрэглэгчийн оруулсан мэдээлэл
@@ -37,11 +37,11 @@ const Step3 = ({
         </div>
         {/* Эхлэх огноо */}
         <div style={{ marginBottom: "16px" }}>
-          <Text strong>Огноо:</Text> <Text>{formattedStartDate}</Text>
+          <Text strong>Эхлэх огноо:</Text> <Text>{formattedStartDate}</Text>
         </div>
         {/* Дуусах огноо */}
         <div style={{ marginBottom: "16px" }}>
-          <Text strong>Огноо:</Text> <Text>{formattedEndDate}</Text>
+          <Text strong>Дуусах огноо:</Text> <Text>{formattedEndDate}</Text>
         </div>
         {/* Байршил */}
         <div style={{ marginBottom: "16px" }}>

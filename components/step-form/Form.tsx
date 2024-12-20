@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
 // Эвент үүсгэх үйл явцыг гурван алхамаар удирддаг Form компонент.
-import React, { useState } from "react";
-import { Steps, message } from "antd";    // Ant Design ашиглан алхамуудыг харуулах
-import Step1 from "./Step1";              // Эхний алхамын компонент
-import Step2 from "./Step2";              // Хоёрдугаар алхамын компонент
-import Step3 from "./Step3";              // Гуравдугаар алхамын компонент
-import { SiGoogleforms } from "react-icons/si";   // Google forms icon
-import { RxAvatar } from "react-icons/rx";        // Avatar icon
-import { IoMdCheckmarkCircle } from "react-icons/io"; // Checkmark icon
-import { useRouter } from "next/navigation"; // Next.js navigation ашиглах
+import React, { useState } from 'react';
+import { Steps, message } from 'antd';    // Ant Design ашиглан алхамуудыг харуулах
+import Step1 from './Step1';              // Эхний алхамын компонент
+import Step2 from './Step2';              // Хоёрдугаар алхамын компонент
+import Step3 from './Step3';              // Гуравдугаар алхамын компонент
+import { SiGoogleforms } from 'react-icons/si';   // Google forms icon
+import { RxAvatar } from 'react-icons/rx';        // Avatar icon
+import { IoMdCheckmarkCircle } from 'react-icons/io'; // Checkmark icon
+import { useRouter } from 'next/navigation'; // Next.js navigation ашиглах
 
 const { Step } = Steps;
 
@@ -30,14 +30,14 @@ const Form = () => {
     address: string;          // Эвентийн хаяг
     guests: Array<{ name: string; email: string }>;   // Урих зочид
   }>({
-    name: "",
-    organizer: "",
-    email: "",
-    phone: "",
+    name: '',
+    organizer: '',
+    email: '',
+    phone: '',
     image: null,
     startDate: null,
     endDate: null,
-    address: "",
+    address: '',
     guests: [],
   });
 
@@ -52,25 +52,25 @@ const Form = () => {
   // API үйлчилгээг үүсгэнэ: event-н өгөгдлийг сервер рүү илгээх.
   const apiService = {
     createEvent: async (eventData: any) => {
-      const response = await fetch("http://localhost:4000/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('http://localhost:4000/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(eventData),
       });
       if (!response.ok) {
-        throw new Error("Event creation failed"); // Алдаа гарвал мэдэгдэл гаргана.
+        throw new Error('Event creation failed'); // Алдаа гарвал мэдэгдэл гаргана.
       }
       return response.json(); // Амжилттай бол өгөгдлийг буцаана.
     },
 
     createGuests: async (guests: any[], eventId: string) => {
-      const response = await fetch("http://localhost:4000/guests", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('http://localhost:4000/guests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(guests.map(guest => ({ ...guest, eventId }))), // Зочдын мэдээллийг eventId-тэй холбох.
       });
       if (!response.ok) {
-        throw new Error("Guest creation failed"); // Алдаа гарвал мэдэгдэл гаргана.
+        throw new Error('Guest creation failed'); // Алдаа гарвал мэдэгдэл гаргана.
       }
       return response.json();   // Амжилттай бол зочдын өгөгдлийг буцаана.
     },
@@ -78,6 +78,7 @@ const Form = () => {
 
   // Форм илгээх үйлдэл.
   const submitForm = async () => {
+    console.log(formData.guests);
     try {
       // Event-н өгөгдлийг бэлдэж байна.
       const eventPayload = {
@@ -99,11 +100,11 @@ const Form = () => {
       }
 
       // Мэдэгдэл гаргах: Эвент болон зочдыг амжилттай илгээсэн.
-      message.success("Эвент болон зочид амжилттай илгээгдлээ!");
-      router.push("/events"); // /events хуудас руу шилжих.
+      message.success('Эвент болон зочид амжилттай илгээгдлээ!');
+      router.push('/events'); // /events хуудас руу шилжих.
     } catch (error) {
-      console.error("Error:", error);
-      message.error("Өгөгдлийг илгээхэд алдаа гарлаа!");  // Алдаа гарвал тухайн мэдэгдэл гаргана.
+      console.error('Error:', error);
+      message.error('Өгөгдлийг илгээхэд алдаа гарлаа!');  // Алдаа гарвал тухайн мэдэгдэл гаргана.
     }
   };
 

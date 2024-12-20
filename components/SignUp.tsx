@@ -156,7 +156,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
             <a
               href=''
               className='underline font-bold'
-            >Бүртгүүлэх</a>
+            >Нэвтрэх</a>
           </div>
         </Form.Item>
       </Form>

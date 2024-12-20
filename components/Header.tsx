@@ -49,7 +49,7 @@ const Header = () => {
 
             if (response.status === 201) {
                 login?.(email, password); 
-                route.push('/event');
+                route.push('/events');
             } 
         } catch (error) {
             console.error('Login failed:', error);
@@ -80,7 +80,8 @@ const Header = () => {
     
             if (response.status === 201) {
                 console.log('Sign-up successful:', response.data);
-                setIsLogin(true);
+                login?.(email, password); 
+                route.push('/events');
                 setIsVisible(false);
             } 
         } catch (error) {
