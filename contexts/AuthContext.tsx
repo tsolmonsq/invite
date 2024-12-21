@@ -31,6 +31,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
+  try {
+    logger.info(`Нэвтэрч байгаа хэрэглэгч: ${email}`); 
+
     const response = await fetch("http://localhost:4000/auth/login", {
       method: "POST",
       headers: {
@@ -41,13 +44,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     if (response.ok) {
       const data = await response.json();
+      logger.info(`Амжилттай нэвтэрсэн: ${email}`);
       localStorage.setItem("token", data.token);
       setUser({ token: data.token });
     } else {
-      throw new Error("Login failed");
+      const errorText = await response.text();
+      logger.error(`Нэвтрэх амжилтгүй боллоо: ${email}. Серверийн хариу: ${errorText}`);
+      throw new Error("Нэвтрэхэд алдаа гарлаа");
+    }
+    } catch (error) {
+      logger.error(`Нэвтрэх явцад алдаа гарлаа: ${email}. Алдаа: ${error.message}`); 
+      throw error;
     }
   };
-
+  
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
